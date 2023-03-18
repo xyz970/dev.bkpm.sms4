@@ -275,6 +275,7 @@
             class="bi bi-arrow-up-short"></i></a>
 
     @include('layouts.script')
+    @yield('script')
 
 </body>
 
