@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PengalamanKerja;
+use App\Models\Pendidikan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Yajra\DataTables\Facades\DataTables;
 
-class PengalamanKerjaController extends Controller
+class PendidikanController extends Controller
 {
-    /**
+   /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-        $pengalamanKerja = DB::table('pengalaman_kerja')->get();
-        return view('admin.data-pengalaman_kerja',compact('pengalamanKerja'));
+        $pendidikan = Pendidikan::all();
+        return view('admin.data-pendidikan',compact('pendidikan'));
 
     }
 
@@ -39,9 +38,8 @@ class PengalamanKerjaController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->only(['nama','jabatan','tahun_masuk','tahun_keluar']);
-        DB::table('pengalaman_kerja')->insert($input);
-        // PengalamanKerja::create($input);
+        $input = $request->only(['nama','tingkatan','tahun_masuk','tahun_keluar']);
+        Pendidikan::create($input);
         return redirect()->back()->with('success','Data berhasil ditambahkan');
     }
 
@@ -76,10 +74,9 @@ class PengalamanKerjaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $input = $request->only(['nama','jabatan','tahun_masuk','tahun_keluar']);
-        DB::table('pengalaman_kerja')->where('id','=',$id)->update($input);
-        // $pk = PengalamanKerja::find($id);
-        // $pk->update($input);
+        $input = $request->only(['nama','tingkatan','tahun_masuk','tahun_keluar']);
+        $pendidikan = Pendidikan::find($id);
+        $pendidikan->update($input);
         return redirect()->back()->with('success','Data berhasil diubah');
     }
 
@@ -91,9 +88,8 @@ class PengalamanKerjaController extends Controller
      */
     public function destroy($id)
     {
-        // $pk = PengalamanKerja::find($id);
-        // $pk->delete();
-        DB::table('pengalaman_kerja')->delete($id);
+        $pendidikan = Pendidikan::find($id);
+        $pendidikan->delete();
         return redirect()->back()->with('success','Data berhasil dihapus');;
     }
 }

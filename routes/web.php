@@ -1,7 +1,13 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CobaController;
+use App\Http\Controllers\DropzoneController;
+use App\Http\Controllers\FormulirController;
+use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\PendidikanController;
 use App\Http\Controllers\PengalamanKerjaController;
+use App\Http\Controllers\UploadController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +37,12 @@ Route::group(['prefix'=>'admin','middleware'=>'checkAuth','as'=>'admin.'],functi
         Route::get('/delete/{id}',[PengalamanKerjaController::class, 'destroy'])->name('delete'); 
         Route::post('/update/{id}',[PengalamanKerjaController::class, 'update'])->name('update');
     });
+    Route::group(['prefix'=>'pendidikan','as'=>'pendidikan.'],function(){
+        Route::get('/',[PendidikanController::class, 'index'])->name('index');
+        Route::post('/store',[PendidikanController::class, 'store'])->name('store'); 
+        Route::get('/delete/{id}',[PendidikanController::class, 'destroy'])->name('delete'); 
+        Route::post('/update/{id}',[PendidikanController::class, 'update'])->name('update');
+    });
     
 });
 Route::group(['middleware'=>'checkAuth'],function(){
@@ -38,3 +50,16 @@ Route::group(['middleware'=>'checkAuth'],function(){
         echo "Profil";
     });
 });
+
+//Optional parameter nama
+Route::get('coba/{nama?}',[CobaController::class, 'index']);
+
+Route::get('upload',[UploadController::class, 'index']);
+Route::post('upload/proses',[UploadController::class, 'proses_upload'])->name('proses_upload');
+Route::get('dropzone',[DropzoneController::class, 'index']);
+Route::post('dropzone/store',[DropzoneController::class, 'store'])->name('dropzone.store');
+Route::post('dropzone/store/pdf',[DropzoneController::class, 'store_pdf'])->name('dropzone.store_pdf');
+Route::get('pegawai/{nama}',[PegawaiController::class, 'index']);
+Route::get('formulir',[FormulirController::class, 'index']);
+Route::post('formulir/insert',[FormulirController::class, 'insert'])->name('formulir.insert');
+

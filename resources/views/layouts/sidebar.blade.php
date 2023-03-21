@@ -16,6 +16,12 @@
                     <span>Pengalaman Kerja</span>
                 </a>
             </li>
+             <li class="nav-item">
+                <a class="nav-link {{ Route::currentRouteName() == 'admin.pendidikan.index' ? '' : 'collapsed'}}" href="{{route('admin.pendidikan.index')}}">
+                    <i class="bi bi-journal-text"></i>
+                    <span>Pendidikan</span>
+                </a>
+            </li>
 
         </ul>
 

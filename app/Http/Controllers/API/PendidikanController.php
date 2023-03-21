@@ -1,24 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
-use App\Models\PengalamanKerja;
+use App\Http\Controllers\Controller;
+use App\Models\Pendidikan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Yajra\DataTables\Facades\DataTables;
 
-class PengalamanKerjaController extends Controller
+class PendidikanController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $pengalamanKerja = DB::table('pengalaman_kerja')->get();
-        return view('admin.data-pengalaman_kerja',compact('pengalamanKerja'));
-
+        $pendidikan = Pendidikan::all();
+       return $this->printResponse($pendidikan);
     }
 
     /**
@@ -39,10 +37,9 @@ class PengalamanKerjaController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->only(['nama','jabatan','tahun_masuk','tahun_keluar']);
-        DB::table('pengalaman_kerja')->insert($input);
-        // PengalamanKerja::create($input);
-        return redirect()->back()->with('success','Data berhasil ditambahkan');
+        $input = $request->only(['nama','tingkatan','tahun_masuk','tahun_keluar']);
+        Pendidikan::create($input);
+        return $this->printResponse(null,'ok', 'Pendidikan berhasil ditambahkan',201);
     }
 
     /**
@@ -76,11 +73,10 @@ class PengalamanKerjaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $input = $request->only(['nama','jabatan','tahun_masuk','tahun_keluar']);
-        DB::table('pengalaman_kerja')->where('id','=',$id)->update($input);
-        // $pk = PengalamanKerja::find($id);
-        // $pk->update($input);
-        return redirect()->back()->with('success','Data berhasil diubah');
+        $input = $request->only(['nama','tingkatan','tahun_masuk','tahun_keluar']);
+        $pendidikan = Pendidikan::find($id);
+        $pendidikan->update($input);
+        return $this->printResponse(null,'ok', 'Pendidikan berhasil diubah');
     }
 
     /**
@@ -91,9 +87,25 @@ class PengalamanKerjaController extends Controller
      */
     public function destroy($id)
     {
-        // $pk = PengalamanKerja::find($id);
-        // $pk->delete();
-        DB::table('pengalaman_kerja')->delete($id);
-        return redirect()->back()->with('success','Data berhasil dihapus');;
+        $pendidikan = Pendidikan::find($id);
+        $pendidikan->delete();
+        return $this->printResponse(null,'ok', 'Pendidikan berhasil dihapus');
+    }
+
+    /**
+     * 
+     * function print response
+     * @param string|array $data
+     * @param string $status
+     * @param string $message
+     * @param int $statusCode 
+     */
+    public function printResponse($data = null,$status = '',$message = '',$statusCode = 200)
+    {
+        return response()->json($data== null ? [
+            'status'=>$status,
+            'message'=>$message
+        ] : $data,$statusCode);
+        
     }
 }
