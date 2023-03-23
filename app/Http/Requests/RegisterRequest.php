@@ -4,6 +4,10 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Info selengkapnya bisa dibaca
+ * https://laravel.com/docs/9.x/validation#form-request-validation
+ */
 class RegisterRequest extends FormRequest
 {
     /**

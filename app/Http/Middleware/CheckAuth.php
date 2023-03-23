@@ -17,6 +17,7 @@ class CheckAuth
      */
     public function handle(Request $request, Closure $next)
     {
+        // Cek ketika user session tidak ditemukan kembalikan tampilan ke tampilan login
         if (!Auth::user()) {
             return redirect()->route('index');
         } else {

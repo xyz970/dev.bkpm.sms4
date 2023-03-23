@@ -16,10 +16,11 @@ class AuthController extends Controller
 
     public function login(Request $r)
     {
-        $input = $r->only(['username','password']);
+        $input = $r->only(['username', 'password']); //ambil input yang dibutuhkan
+        // Lakukan proses login ketika login berhasil akan diarahkan ke tampilan dashboard, jika tidak maka akan diarahkan kembali ke login
         if (Auth::attempt($input)) {
             return redirect()->route('admin.dashboard');
-        }else{
+        } else {
             return redirect()->back();
         }
     }
@@ -29,16 +30,13 @@ class AuthController extends Controller
     }
     public function register(RegisterRequest $r)
     {
-        if ($r->validated()) {
-            User::create($r->all());
-            return redirect()->route('index');
-        }else {
-            return redirect()->back()->withErrors($r->validate());
-        }
+        $r->validate(); //Validasi request
+        User::create($r->all());
+        return redirect()->route('index');
     }
     public function logout()
     {
-        Auth::logout();
+        Auth::logout(); //Lakukan proses logout
         return redirect()->route('index');
     }
     public function dashboard()

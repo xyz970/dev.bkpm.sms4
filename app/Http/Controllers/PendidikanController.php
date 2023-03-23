@@ -15,9 +15,8 @@ class PendidikanController extends Controller
      */
     public function index(Request $request)
     {
-        $pendidikan = Pendidikan::all();
-        return view('admin.data-pendidikan',compact('pendidikan'));
-
+        $pendidikan = Pendidikan::all(); //Ambil semua data berdasarkan model
+        return view('admin.data-pendidikan',compact('pendidikan')); //Passing value nya ke view
     }
 
     /**
@@ -38,9 +37,9 @@ class PendidikanController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->only(['nama','tingkatan','tahun_masuk','tahun_keluar']);
-        Pendidikan::create($input);
-        return redirect()->back()->with('success','Data berhasil ditambahkan');
+        $input = $request->only(['nama','tingkatan','tahun_masuk','tahun_keluar']); //ambil input yang dibutuhkan
+        Pendidikan::create($input); //Masukkan data berdasarkan input yang telah diambil
+        return redirect()->back()->with('success','Data berhasil ditambahkan'); // arahkan kembali ke tampilan sebelumnya
     }
 
     /**
@@ -74,10 +73,10 @@ class PendidikanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $input = $request->only(['nama','tingkatan','tahun_masuk','tahun_keluar']);
-        $pendidikan = Pendidikan::find($id);
-        $pendidikan->update($input);
-        return redirect()->back()->with('success','Data berhasil diubah');
+        $input = $request->only(['nama','tingkatan','tahun_masuk','tahun_keluar']); //ambil input yang dibutuhkan
+        $pendidikan = Pendidikan::find($id); //temukan data sesuai dengan parameter $id
+        $pendidikan->update($input); //ubah data berdasarkan input yang telah diambil
+        return redirect()->back()->with('success','Data berhasil diubah'); // arahkan kembali ke tampilan sebelumnya
     }
 
     /**
@@ -88,8 +87,8 @@ class PendidikanController extends Controller
      */
     public function destroy($id)
     {
-        $pendidikan = Pendidikan::find($id);
-        $pendidikan->delete();
-        return redirect()->back()->with('success','Data berhasil dihapus');;
+        $pendidikan = Pendidikan::find($id); //temukan data sesuai dengan parameter $id
+        $pendidikan->delete(); //Hapus data
+        return redirect()->back()->with('success','Data berhasil dihapus');// arahkan kembali ke tampilan sebelumnya
     }
 }

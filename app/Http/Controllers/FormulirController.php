@@ -16,6 +16,7 @@ class FormulirController extends Controller
         /**
          * Direkomendasikan untuk menggunakan only daripada menggunakan input dan all.. 
          * Info selengkapnya bisa di cek di dokumentasi laravel
+         * https://laravel.com/docs/9.x/requests
          */
 
         $messages = ['required' => 'Input :attribute wajib diisi!', 'min' => 'Input :attribute harus diisi minimal :min karakter!', 'max' => 'Input :attribute harus diisi maksimal :max karakter!',];

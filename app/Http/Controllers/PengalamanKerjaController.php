@@ -16,8 +16,8 @@ class PengalamanKerjaController extends Controller
      */
     public function index(Request $request)
     {
-        $pengalamanKerja = DB::table('pengalaman_kerja')->get();
-        return view('admin.data-pengalaman_kerja',compact('pengalamanKerja'));
+        $pengalamanKerja = DB::table('pengalaman_kerja')->get(); //Ambil semua data berdasarkan table(menggunakan Query Builder)
+        return view('admin.data-pengalaman_kerja',compact('pengalamanKerja')); //Passing value nya ke view
 
     }
 
@@ -39,10 +39,9 @@ class PengalamanKerjaController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->only(['nama','jabatan','tahun_masuk','tahun_keluar']);
-        DB::table('pengalaman_kerja')->insert($input);
-        // PengalamanKerja::create($input);
-        return redirect()->back()->with('success','Data berhasil ditambahkan');
+        $input = $request->only(['nama','jabatan','tahun_masuk','tahun_keluar']); //ambil input yang dibutuhkan
+        DB::table('pengalaman_kerja')->insert($input); //Simpan data berdasarkan input yang telah diambil (Query Builder)
+        return redirect()->back()->with('success','Data berhasil ditambahkan'); // arahkan kembali ke tampilan sebelumnya
     }
 
     /**
@@ -77,10 +76,10 @@ class PengalamanKerjaController extends Controller
     public function update(Request $request, $id)
     {
         $input = $request->only(['nama','jabatan','tahun_masuk','tahun_keluar']);
-        DB::table('pengalaman_kerja')->where('id','=',$id)->update($input);
+        DB::table('pengalaman_kerja')->where('id','=',$id)->update($input); //ubah data berdasarkan input yang telah diambil
         // $pk = PengalamanKerja::find($id);
         // $pk->update($input);
-        return redirect()->back()->with('success','Data berhasil diubah');
+        return redirect()->back()->with('success','Data berhasil diubah'); // arahkan kembali ke tampilan sebelumnya
     }
 
     /**
@@ -93,7 +92,7 @@ class PengalamanKerjaController extends Controller
     {
         // $pk = PengalamanKerja::find($id);
         // $pk->delete();
-        DB::table('pengalaman_kerja')->delete($id);
-        return redirect()->back()->with('success','Data berhasil dihapus');;
+        DB::table('pengalaman_kerja')->delete($id); //temukan data sesuai dengan parameter $id dan hapus data yang telah ditemukan
+        return redirect()->back()->with('success','Data berhasil dihapus'); // arahkan kembali ke tampilan sebelumnya
     }
 }
