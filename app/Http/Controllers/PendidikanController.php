@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\BroadcastMessage;
 use App\Models\Pendidikan;
+use Illuminate\Broadcasting\BroadcastEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Pusher\Pusher;
 
 class PendidikanController extends Controller
 {
@@ -37,8 +40,21 @@ class PendidikanController extends Controller
      */
     public function store(Request $request)
     {
+        
         $input = $request->only(['nama','tingkatan','tahun_masuk','tahun_keluar']); //ambil input yang dibutuhkan
         Pendidikan::create($input); //Masukkan data berdasarkan input yang telah diambil
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            array('cluster' => env('PUSHER_APP_CLUSTER'))
+        );
+        
+        $pusher->trigger(
+            'my-channel',
+            'my-event',
+            'Data Baru telah ditambahkan'
+        );
         return redirect()->back()->with('success','Data berhasil ditambahkan'); // arahkan kembali ke tampilan sebelumnya
     }
 

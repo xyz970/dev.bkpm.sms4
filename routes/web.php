@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\BroadcastMessage;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CobaController;
 use App\Http\Controllers\DropzoneController;
@@ -45,6 +46,7 @@ Route::group(['prefix'=>'admin','middleware'=>'checkAuth','as'=>'admin.'],functi
     });
     
 });
+
 Route::group(['middleware'=>'checkAuth'],function(){
     Route::get('/profile',function(){
         echo "Profil";
@@ -62,4 +64,23 @@ Route::post('dropzone/store/pdf',[DropzoneController::class, 'store_pdf'])->name
 Route::get('pegawai/{nama}',[PegawaiController::class, 'index']);
 Route::get('formulir',[FormulirController::class, 'index']);
 Route::post('formulir/insert',[FormulirController::class, 'insert'])->name('formulir.insert');
+Route::get('event',function(){
+//    event(new BroadcastMessage('Hello World'));
+$pusher = new Pusher\Pusher(
+    env('PUSHER_APP_KEY'),
+    env('PUSHER_APP_SECRET'),
+    env('PUSHER_APP_ID'),
+    array('cluster' => env('PUSHER_APP_CLUSTER'))
+);
 
+$pusher->trigger(
+    'my-channel',
+    'my-event',
+    'Welcome'
+);
+
+return "Event has been sent";
+});
+Route::get('tes-event',function(){
+    return view('tes-event');
+});

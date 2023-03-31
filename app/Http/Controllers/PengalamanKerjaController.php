@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PengalamanKerja;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Pusher\Pusher;
 use Yajra\DataTables\Facades\DataTables;
 
 class PengalamanKerjaController extends Controller
@@ -40,6 +41,18 @@ class PengalamanKerjaController extends Controller
     public function store(Request $request)
     {
         $input = $request->only(['nama','jabatan','tahun_masuk','tahun_keluar']); //ambil input yang dibutuhkan
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            array('cluster' => env('PUSHER_APP_CLUSTER'))
+        );
+        
+        $pusher->trigger(
+            'my-channel',
+            'my-event',
+            'Data Baru telah ditambahkan'
+        );
         DB::table('pengalaman_kerja')->insert($input); //Simpan data berdasarkan input yang telah diambil (Query Builder)
         return redirect()->back()->with('success','Data berhasil ditambahkan'); // arahkan kembali ke tampilan sebelumnya
     }
