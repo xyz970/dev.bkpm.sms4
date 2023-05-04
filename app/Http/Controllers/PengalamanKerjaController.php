@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TambahPengalamanKerjaRequest;
+use App\Http\Requests\UpdatePendidikanRequest;
 use App\Models\PengalamanKerja;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -38,8 +40,9 @@ class PengalamanKerjaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TambahPengalamanKerjaRequest $request)
     {
+        $validated = $request->validated();
         $input = $request->only(['nama','jabatan','tahun_masuk','tahun_keluar']); //ambil input yang dibutuhkan
         $pusher = new Pusher(
             env('PUSHER_APP_KEY'),
@@ -86,8 +89,9 @@ class PengalamanKerjaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePendidikanRequest $request, $id)
     {
+        $validated = $request->validated();
         $input = $request->only(['nama','jabatan','tahun_masuk','tahun_keluar']);
         DB::table('pengalaman_kerja')->where('id','=',$id)->update($input); //ubah data berdasarkan input yang telah diambil
         // $pk = PengalamanKerja::find($id);

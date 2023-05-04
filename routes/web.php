@@ -9,6 +9,7 @@ use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PendidikanController;
 use App\Http\Controllers\PengalamanKerjaController;
 use App\Http\Controllers\UploadController;
+use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,6 +48,8 @@ Route::group(['prefix'=>'admin','middleware'=>'checkAuth','as'=>'admin.'],functi
     
 });
 
+Route::get('session/create',[SessionController::class, 'create']);
+Route::get('session/show',[SessionController::class, 'show']);
 Route::group(['middleware'=>'checkAuth'],function(){
     Route::get('/profile',function(){
         echo "Profil";

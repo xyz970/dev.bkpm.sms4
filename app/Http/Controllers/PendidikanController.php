@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Events\BroadcastMessage;
+use App\Http\Requests\TambahPendidikanRequest;
+use App\Http\Requests\UpdatePendidikanRequest;
 use App\Models\Pendidikan;
+use App\Models\PengalamanKerja;
 use Illuminate\Broadcasting\BroadcastEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +22,9 @@ class PendidikanController extends Controller
     public function index(Request $request)
     {
         $pendidikan = Pendidikan::all(); //Ambil semua data berdasarkan model
-        return view('admin.data-pendidikan',compact('pendidikan')); //Passing value nya ke view
+        $pengalaman = PengalamanKerja::all();
+        // DB::table('')->get('');
+        return view('admin.data-pendidikan',compact('pendidikan','pengalaman')); //Passing value nya ke view
     }
 
     /**
@@ -38,9 +43,9 @@ class PendidikanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TambahPendidikanRequest $request)
     {
-        
+        $validated = $request->validated();
         $input = $request->only(['nama','tingkatan','tahun_masuk','tahun_keluar']); //ambil input yang dibutuhkan
         Pendidikan::create($input); //Masukkan data berdasarkan input yang telah diambil
         $pusher = new Pusher(
@@ -87,8 +92,9 @@ class PendidikanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePendidikanRequest $request, $id)
     {
+        $validated = $request->validated();
         $input = $request->only(['nama','tingkatan','tahun_masuk','tahun_keluar']); //ambil input yang dibutuhkan
         $pendidikan = Pendidikan::find($id); //temukan data sesuai dengan parameter $id
         $pendidikan->update($input); //ubah data berdasarkan input yang telah diambil

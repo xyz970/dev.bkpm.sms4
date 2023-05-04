@@ -21,7 +21,7 @@
                         <div class="card-body">
 
                             <div class="modal fade tambahData" tabindex="-1" role="dialog"
-                                aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                aria-labelledby="myLargeModalLabel" aria-hidden="true" id="formTambahData">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -38,8 +38,12 @@
                                                     <label class="col-sm-3 col-form-label f-w-600"
                                                         for="id">Nama</label>
                                                     <div class="col-sm-9">
-                                                        <input class="id form-control" type="text" required=""
-                                                            name="nama" data-bs-original-title="" title="">
+                                                        <input class="id form-control @error('nama') is-invalid @enderror"
+                                                            type="text" required="" name="nama"
+                                                            data-bs-original-title="" title="">
+                                                        @error('nama')
+                                                            <div class="invalid-feedback">{{ $message }}</div>
+                                                        @enderror
                                                     </div>
                                                 </div>
 
@@ -48,8 +52,13 @@
                                                     <label class="col-sm-3 col-form-label f-w-600"
                                                         for="id">tingkatan</label>
                                                     <div class="col-sm-9">
-                                                        <input class="id form-control" type="text" required=""
-                                                            name="tingkatan" data-bs-original-title="" title="">
+                                                        <input
+                                                            class="id form-control @error('tingkatan') is-invalid @enderror"
+                                                            type="text" required="" name="tingkatan"
+                                                            data-bs-original-title="" title="">
+                                                        @error('tingkatan')
+                                                            <div class="invalid-feedback">{{ $message }}</div>
+                                                        @enderror
                                                     </div>
                                                 </div>
 
@@ -57,18 +66,28 @@
                                                     <label class="col-sm-3 col-form-label f-w-600" for="id">Tahun
                                                         Masuk</label>
                                                     <div class="col-sm-9">
-                                                        <input class="id form-control" type="text" required=""
-                                                            id="tahun_masuk" autocomplete="off" name="tahun_masuk"
-                                                            data-bs-original-title="" title="">
+                                                        <input
+                                                            class="id form-control @error('tahun_masuk') is-invalid @enderror"
+                                                            type="text" required="" id="tahun_masuk"
+                                                            autocomplete="off" name="tahun_masuk" data-bs-original-title=""
+                                                            title="">
+                                                        @error('tahun_masuk')
+                                                            <div class="invalid-feedback">{{ $message }}</div>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
                                                     <label class="col-sm-3 col-form-label f-w-600" for="id">Tahun
                                                         Keluar</label>
                                                     <div class="col-sm-9">
-                                                        <input class="id form-control" type="text" required=""
-                                                            id="tahun_keluar" autocomplete="off" name="tahun_keluar"
-                                                            data-bs-original-title="" title="">
+                                                        <input
+                                                            class="id form-control @error('tahun_keluar') is-invalid @enderror"
+                                                            type="text" required="" id="tahun_keluar"
+                                                            autocomplete="off" name="tahun_keluar" data-bs-original-title=""
+                                                            title="">
+                                                        @error('tahun_keluar')
+                                                            <div class="invalid-feedback">{{ $message }}</div>
+                                                        @enderror
                                                     </div>
                                                 </div>
 
@@ -134,10 +153,15 @@
                                                                 <label class="col-sm-3 col-form-label f-w-600"
                                                                     for="id">Nama</label>
                                                                 <div class="col-sm-9">
-                                                                    <input class="id form-control" type="text"
-                                                                        required="" name="nama"
+                                                                    <input
+                                                                        class="id form-control @error('nama') is-invalid @enderror"
+                                                                        type="text" required="" name="nama"
                                                                         value="{{ $item->nama }}"
                                                                         data-bs-original-title="" title="">
+                                                                    @error('nama')
+                                                                        <div class="invalid-feedback">{{ $message }}
+                                                                        </div>
+                                                                    @enderror
                                                                 </div>
                                                             </div>
 
@@ -146,10 +170,15 @@
                                                                 <label class="col-sm-3 col-form-label f-w-600"
                                                                     for="id">tingkatan</label>
                                                                 <div class="col-sm-9">
-                                                                    <input class="id form-control" type="text"
-                                                                        required="" name="tingkatan"
+                                                                    <input
+                                                                        class="id form-control @error('tingkatan') is-invalid @enderror"
+                                                                        type="text" required="" name="tingkatan"
                                                                         value="{{ $item->tingkatan }}"
                                                                         data-bs-original-title="" title="">
+                                                                    @error('tingkatan')
+                                                                        <div class="invalid-feedback">{{ $message }}
+                                                                        </div>
+                                                                    @enderror
                                                                 </div>
                                                             </div>
 
@@ -158,11 +187,15 @@
                                                                     for="id">Tahun
                                                                     Masuk</label>
                                                                 <div class="col-sm-9">
-                                                                    <input class="id form-control" type="text"
+                                                                    <input class="id form-control @error('tahun_masuk') is-invalid @enderror" type="text"
                                                                         required="" name="tahun_masuk"
                                                                         value="{{ $item->tahun_masuk }}" id="tahun_masuk"
                                                                         autocomplete="off" data-bs-original-title=""
                                                                         title="">
+                                                                         @error('tahun_masuk')
+                                                                        <div class="invalid-feedback">{{ $message }}
+                                                                        </div>
+                                                                    @enderror
                                                                 </div>
                                                             </div>
                                                             <div class="mb-3 row">
@@ -170,11 +203,15 @@
                                                                     for="id">Tahun
                                                                     Keluar</label>
                                                                 <div class="col-sm-9">
-                                                                    <input class="id form-control" type="text"
+                                                                    <input class="id form-control @error('tahun_keluar') is-invalid @enderror" type="text"
                                                                         value="{{ $item->tahun_keluar }}" required=""
                                                                         name="tahun_keluar" id="tahun_keluar"
                                                                         autocomplete="off" data-bs-original-title=""
                                                                         title="">
+                                                                          @error('tahun_keluar')
+                                                                        <div class="invalid-feedback">{{ $message }}
+                                                                        </div>
+                                                                    @enderror
                                                                 </div>
                                                             </div>
 
@@ -226,9 +263,11 @@
 @endsection
 
 @section('script')
+
+    
     <script>
         $("input[id=tahun_keluar]").yearpicker()
         $("input[id=tahun_masuk]").yearpicker()
-
+        
     </script>
 @endsection
